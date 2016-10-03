@@ -1,7 +1,8 @@
 # Darkskyx
 
-**TODO: Add description**
+[![Build Status](https://semaphoreci.com/api/v1/samaracharya/darkskyx/branches/master/badge.svg)](https://semaphoreci.com/samaracharya/darkskyx)
 
+> A Darksky.com weather api client for Elixir
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
@@ -21,4 +22,3 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       [applications: [:darkskyx]]
     end
     ```
-
