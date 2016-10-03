@@ -9,14 +9,28 @@ defmodule Darkskyx.Api do
 
   @base_url "https://api.darksky.net/forecast"
 
-  def forecast(lat, lng), do: read("#{lat},#{lng}", process_params(nil))
-  def forecast(lat, lng, params) do
-    params = params
-      |> process_params
-    read("#{lat},#{lng}", params)
-  end
+  @doc """
+  Perform a forecast API call for given latitude longitude
+  """
+  def forecast(lat, lng), do: read("#{lat},#{lng}", nil)
+  def forecast(lat, lng, params), do: read("#{lat},#{lng}", params)
+
+  @doc """
+  Perform a time machine API call for given latitude, longitude and time
+
+  ## time
+  Either be a UNIX time (that is, seconds since midnight GMT on 1 Jan 1970)
+  or a string formatted as follows: `[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone]`.
+  timezone should either be omitted (to refer to local time for the location being requested),
+  Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
+  The timezone is only used for determining the time of the request; the response will always be relative to the local time zone.
+  """
+  def time_machine(lat, lng, time), do: read("#{lat},#{lng},#{time}", nil)
+  def time_machine(lat, lng, time, params), do: read("#{lat},#{lng},#{time}", params)
 
   def build_url(path_arg, query_params) do
+    query_params = query_params
+      |> process_params
     "#{@base_url}/#{api_key}/#{path_arg}?#{URI.encode_query(query_params)}"
   end
 
