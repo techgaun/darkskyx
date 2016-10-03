@@ -53,6 +53,8 @@ Darkskyx.forecast(41.032, -94.234)
 
 Darkskyx.forecast(41.043, -93.23432, %Darkskyx{lang: "ar"})
 
+Darkskyx.forecast(41.032, -94.234, %Darkskyx{exclude: "daily,hourly"})
+
 Darkskyx.time_machine(41.043, -93.23432, 13432423)
 
 Darkskyx.time_machine(41.043, -93.23432, 13432423, %Darkskyx{lang: "ar", units: "si"})
@@ -60,6 +62,7 @@ Darkskyx.time_machine(41.043, -93.23432, 13432423, %Darkskyx{lang: "ar", units: 
 
 ## To Do
 
+- Consider adding shortcuts such as current instead of having to parse response on users side
 - Consider adding rate-limit and show current day API usage
 
 ## Author
