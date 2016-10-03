@@ -12,8 +12,7 @@ defmodule Darkskyx.Api do
   @doc """
   Perform a forecast API call for given latitude longitude
   """
-  def forecast(lat, lng), do: read("#{lat},#{lng}", nil)
-  def forecast(lat, lng, params), do: read("#{lat},#{lng}", params)
+  def forecast(lat, lng, params \\ defaults), do: read("#{lat},#{lng}", params)
 
   @doc """
   Perform a time machine API call for given latitude, longitude and time
@@ -25,8 +24,7 @@ defmodule Darkskyx.Api do
   Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
   The timezone is only used for determining the time of the request; the response will always be relative to the local time zone.
   """
-  def time_machine(lat, lng, time), do: read("#{lat},#{lng},#{time}", nil)
-  def time_machine(lat, lng, time, params), do: read("#{lat},#{lng},#{time}", params)
+  def time_machine(lat, lng, time, params \\ defaults), do: read("#{lat},#{lng},#{time}", params)
 
   def build_url(path_arg, query_params) do
     query_params = query_params
@@ -45,6 +43,6 @@ defmodule Darkskyx.Api do
   def process_params(params) do
     defaults
     |> Map.merge(params)
-    |> Map.from_struct
+    |> Map.delete(:__struct__)
   end
 end
