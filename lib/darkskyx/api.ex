@@ -9,20 +9,28 @@ defmodule Darkskyx.Api do
 
   @base_url "https://api.darksky.net/forecast"
 
-  def forecast(lat, lng, opts) when is_number(lat) and is_number(lng) do
-    
-  end
-  def forecast(lat, lng, opts \\ []) when is_bitstring(lat) and is_bitstring(lng) do
+  def forecast(lat, lng), do: read("#{lat},#{lng}", process_params(nil))
+  def forecast(lat, lng, params) do
+    params = params
+      |> process_params
+    read("#{lat},#{lng}", params)
   end
 
   def build_url(path_arg, query_params) do
     "#{@base_url}/#{api_key}/#{path_arg}?#{URI.encode_query(query_params)}"
   end
 
-  def read(path_arg, query_params) do
+  def read(path_arg, query_params \\ %{}) do
     path_arg
     |> build_url(query_params)
-    |> Api.get(user_agent)
+    |> Api.get(request_headers)
     |> Parser.parse
+  end
+
+  def process_params(nil), do: defaults
+  def process_params(params) do
+    defaults
+    |> Map.merge(params)
+    |> Map.from_struct
   end
 end

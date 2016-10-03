@@ -4,4 +4,6 @@ defmodule Darkskyx do
 
   For more details on API, refer to https://darksky.net/dev/docs
   """
+
+  defstruct extend: nil, exclude: nil, lang: "en", units: "auto"
 end

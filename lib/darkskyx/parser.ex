@@ -32,9 +32,5 @@ defmodule Darkskyx.Parser do
   defp parse_success_response(body) do
     body
     |> Poison.decode!
-    |> IO.inspect
-    |> _parse_success_response
   end
-  def _parse_success_response(%{"status" => "OK", "results" => result}) when is_list(result) or is_map(result), do: result
-  def _parse_success_response(body), do: body
 end
