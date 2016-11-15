@@ -1,6 +1,6 @@
 # Darkskyx
 
-[![Build Status](https://semaphoreci.com/api/v1/samaracharya/darkskyx/branches/master/badge.svg)](https://semaphoreci.com/samaracharya/darkskyx)
+[![Build Status](https://semaphoreci.com/api/v1/techgaun/darkskyx/branches/master/badge.svg)](https://semaphoreci.com/techgaun/darkskyx)
 
 > A Darksky.net weather api client for Elixir
 
