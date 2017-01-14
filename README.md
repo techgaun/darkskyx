@@ -1,6 +1,6 @@
 # Darkskyx
 
-[![Build Status](https://semaphoreci.com/api/v1/techgaun/darkskyx/branches/master/badge.svg)](https://semaphoreci.com/techgaun/darkskyx)
+[![Build Status](https://semaphoreci.com/api/v1/techgaun/darkskyx/branches/master/badge.svg)](https://semaphoreci.com/techgaun/darkskyx) [![Hex version](https://img.shields.io/hexpm/v/darkskyx.svg "Hex version")](https://hex.pm/packages/darkskyx) ![Hex downloads](https://img.shields.io/hexpm/dt/darkskyx.svg "Hex downloads")
 
 > A Darksky.net weather api client for Elixir
 
