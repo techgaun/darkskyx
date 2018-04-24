@@ -33,7 +33,7 @@ defmodule Darkskyx.Mixfile do
   defp deps do
     [
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 0.8 or ~> 0.9"},
+      {:httpoison, "~> 0.8 or ~> 1.0"},
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.11", only: :dev},
       {:dogma, "~> 0.1", only: [:dev, :test]}
