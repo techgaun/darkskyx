@@ -2,16 +2,18 @@ defmodule Darkskyx.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :darkskyx,
-     version: "0.1.3",
-     elixir: "~> 1.2",
-     description: "A Darksky.net weather api client for Elixir",
-     source_url: "https://github.com/techgaun/darkskyx",
-     package: package(),
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     docs: [extras: ["README.md"]],
-     deps: deps()]
+    [
+      app: :darkskyx,
+      version: "0.1.3",
+      elixir: "~> 1.2",
+      description: "A Darksky.net weather api client for Elixir",
+      source_url: "https://github.com/techgaun/darkskyx",
+      package: package(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      docs: [extras: ["README.md"]],
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application
@@ -33,7 +35,7 @@ defmodule Darkskyx.Mixfile do
   defp deps do
     [
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 0.8 or ~> 1.0"},
+      {:httpoison, "~> 1.2"},
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.11", only: :dev},
       {:dogma, "~> 0.1", only: [:dev, :test]}

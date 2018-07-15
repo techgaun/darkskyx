@@ -4,7 +4,8 @@ defmodule Darkskyx.Parser do
   """
 
   @type status_code :: integer
-  @type response :: {:ok, [struct]} | {:ok, struct} | :ok | {:error, map, status_code} | {:error, map} | any
+  @type response ::
+          {:ok, [struct]} | {:ok, struct} | :ok | {:error, map, status_code} | {:error, map} | any
 
   @doc """
   Parses the response from darksky API calls
@@ -12,7 +13,8 @@ defmodule Darkskyx.Parser do
   @spec parse(tuple) :: response
   def parse(response) do
     case response do
-      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}} when status in [200, 201] ->
+      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}}
+      when status in [200, 201] ->
         {:ok, parse_success_response(body)}
 
       {:ok, %HTTPoison.Response{body: _, headers: _, status_code: 204}} ->
@@ -24,6 +26,7 @@ defmodule Darkskyx.Parser do
 
       {:error, %HTTPoison.Error{id: _, reason: reason}} ->
         {:error, %{reason: reason}}
+
       _ ->
         response
     end
@@ -31,6 +34,6 @@ defmodule Darkskyx.Parser do
 
   defp parse_success_response(body) do
     body
-    |> Poison.decode!
+    |> Poison.decode!()
   end
 end
