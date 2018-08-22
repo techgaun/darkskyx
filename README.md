@@ -12,7 +12,7 @@ Add `darkskyx` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:darkskyx, "~> 0.1.4"}]
+  [{:darkskyx, "~> 0.1.5"}]
 end
 ```
 
