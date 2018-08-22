@@ -20,6 +20,9 @@ defmodule Darkskyx.Parser do
       {:ok, %HTTPoison.Response{body: _, headers: _, status_code: 204}} ->
         :ok
 
+      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: 403}} ->
+        {:error, body, 403}
+
       {:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}} ->
         {:ok, json} = Poison.decode(body)
         {:error, json, status}
