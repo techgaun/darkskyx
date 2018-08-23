@@ -1,0 +1,34 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "User-agent": "Darkskyx",
+        "Content-Encoding": "gzip"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.darksky.net/forecast/DARKSKY_API_KEY/39.749476,-104.991428,1514764800?exclude=daily%2C+hourly&extend=&lang=en&units=auto"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"latitude\":39.749476,\"longitude\":-104.991428,\"timezone\":\"America/Denver\",\"currently\":{\"time\":1514764800,\"summary\":\"Mostly Cloudy\",\"icon\":\"partly-cloudy-night\",\"precipIntensity\":0,\"precipProbability\":0,\"temperature\":16.91,\"apparentTemperature\":16.91,\"dewPoint\":8.78,\"humidity\":0.7,\"pressure\":1031.46,\"windSpeed\":0.81,\"windGust\":3,\"windBearing\":28,\"cloudCover\":0.74,\"uvIndex\":0,\"visibility\":4.17},\"flags\":{\"sources\":[\"cmc\",\"gfs\",\"hrrr\",\"icon\",\"isd\",\"madis\",\"nam\",\"sref\"],\"nearest-station\":0.234,\"units\":\"us\"},\"offset\":-7}",
+      "headers": {
+        "Date": "Thu, 23 Aug 2018 12:29:54 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "520",
+        "Connection": "keep-alive",
+        "X-Authentication-Time": "2ms",
+        "Cache-Control": "max-age=3600",
+        "Expires": "Thu, 23 Aug 2018 13:29:54 +0000",
+        "X-Forecast-API-Calls": "6",
+        "X-Content-Type-Options": "nosniff",
+        "X-Response-Time": "6.210ms",
+        "Vary": "Accept-Encoding"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
