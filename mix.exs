@@ -38,8 +38,8 @@ defmodule Darkskyx.Mixfile do
       {:httpoison, "~> 1.2"},
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.11", only: :dev},
-      {:dogma, "~> 0.1", only: [:dev, :test]},
-      {:exvcr, "~> 0.10", only: :test}
+      {:exvcr, "~> 0.10", only: :test},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
   end
 
