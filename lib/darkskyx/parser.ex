@@ -10,12 +10,16 @@ defmodule Darkskyx.Parser do
   @doc """
   Parses the response from darksky API calls
   """
-  @spec parse(tuple) :: response
-  def parse(response) do
+  @spec parse(tuple, boolean) :: response
+  def parse(response, with_headers) do
     case response do
-      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}}
+      {:ok, %HTTPoison.Response{body: body, headers: headers, status_code: status}}
       when status in [200, 201] ->
-        {:ok, parse_success_response(body)}
+        if with_headers do
+          {:ok, parse_success_response(body), parse_headers(headers)}
+        else
+          {:ok, parse_success_response(body)}
+        end
 
       {:ok, %HTTPoison.Response{body: _, headers: _, status_code: 204}} ->
         :ok
@@ -38,5 +42,10 @@ defmodule Darkskyx.Parser do
   defp parse_success_response(body) do
     body
     |> Poison.decode!()
+  end
+
+  defp parse_headers(headers) do
+    headers
+    |> Map.new
   end
 end
