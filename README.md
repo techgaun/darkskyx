@@ -12,7 +12,7 @@ Add `darkskyx` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:darkskyx, "~> 0.1.5"}]
+  [{:darkskyx, "~> 0.1.6"}]
 end
 ```
 
@@ -55,14 +55,22 @@ Darkskyx.forecast(41.043, -93.23432, %Darkskyx{lang: "ar"})
 
 Darkskyx.forecast(41.032, -94.234, %Darkskyx{exclude: "daily,hourly"})
 
+Darkskyx.forecast_with_headers(41.032, -94.234)
+
 Darkskyx.time_machine(41.043, -93.23432, 13432423)
 
 Darkskyx.time_machine(41.043, -93.23432, 13432423, %Darkskyx{lang: "ar", units: "si"})
+
+Darkskyx.time_machine_with_headers(41.043, -93.23432, 13432423)
 
 Darkskyx.current(37, -94)
 
 Darkskyx.current(37, -94, %Darkskyx{lang: "ar"})
 ```
+
+This package only performs API call and asks consumer of this package
+to perform things such as handling rate-limiting. For that, the headers
+are returned on `_with_headers` version of function calls.
 
 ## To Do
 
