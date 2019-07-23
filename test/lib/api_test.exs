@@ -128,4 +128,36 @@ defmodule Darkskyx.ApiTest do
       end
     end
   end
+
+  describe "forecast_with_headers/3" do
+    test "no options", %{forecast_keys: forecast_keys} do
+      use_cassette "valid_forecast" do
+        {:ok, forecast, headers} = Api.forecast_with_headers(39.749476, -104.991428)
+
+        forecast_keys
+        |> Enum.each(fn key ->
+          assert Enum.member?(Map.keys(forecast), key)
+        end)
+
+        assert "max-age=60" == headers["Cache-Control"]
+        assert "1" == headers["X-Forecast-API-Calls"]
+      end
+    end
+  end
+
+  describe "time_machine_with_headers/3" do
+    test "no options", %{time_machine_keys: time_machine_keys} do
+      use_cassette "valid_time_machine" do
+        {:ok, time_machine, headers} = Api.time_machine_with_headers(39.749476, -104.991428, @time)
+
+        time_machine_keys
+        |> Enum.each(fn key ->
+          assert Enum.member?(Map.keys(time_machine), key)
+        end)
+
+        assert "max-age=3600" == headers["Cache-Control"]
+        assert "5" == headers["X-Forecast-API-Calls"]
+      end
+    end
+  end
 end

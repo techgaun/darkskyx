@@ -15,6 +15,12 @@ defmodule Darkskyx.Api do
   def forecast(lat, lng, params \\ defaults()), do: read("#{lat},#{lng}", params)
 
   @doc """
+  Perform a forecast API call for given latitude longitude and also returns headers
+  """
+  def forecast_with_headers(lat, lng, params \\ defaults()),
+    do: read("#{lat},#{lng}", params, true)
+
+  @doc """
   Perform a time machine API call for given latitude, longitude and time
 
   ## time
@@ -27,6 +33,13 @@ defmodule Darkskyx.Api do
   def time_machine(lat, lng, time, params \\ defaults()),
     do: read("#{lat},#{lng},#{time}", params)
 
+  @doc """
+  Perform a time machine API call for given latitude, longitude and time and returns headers
+  """
+
+  def time_machine_with_headers(lat, lng, time, params \\ defaults()),
+    do: read("#{lat},#{lng},#{time}", params, true)
+
   def build_url(path_arg, query_params) do
     query_params =
       query_params
@@ -35,11 +48,11 @@ defmodule Darkskyx.Api do
     "#{@base_url}/#{api_key()}/#{path_arg}?#{URI.encode_query(query_params)}"
   end
 
-  def read(path_arg, query_params \\ %{}) do
+  def read(path_arg, query_params \\ %{}, with_headers \\ false) do
     path_arg
     |> build_url(query_params)
     |> Api.get(request_headers())
-    |> Parser.parse()
+    |> Parser.parse(with_headers)
   end
 
   def process_params(nil), do: defaults()
