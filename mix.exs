@@ -36,8 +36,7 @@ defmodule Darkskyx.Mixfile do
     [
       {:poison, "~> 3.1"},
       {:httpoison, "~> 1.2"},
-      {:earmark, "~> 0.1", only: :dev},
-      {:ex_doc, "~> 0.11", only: :dev},
+      {:ex_doc, "~> 0.21", only: :dev},
       {:exvcr, "~> 0.10", only: :test},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
