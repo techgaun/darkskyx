@@ -5,7 +5,13 @@ defmodule Darkskyx.Parser do
 
   @type status_code :: integer
   @type headers :: map
-  @type response :: {:ok, [struct], headers} | {:ok, struct, headers} | :ok | {:error, map, status_code} | {:error, map} | any
+  @type response ::
+          {:ok, [struct], headers}
+          | {:ok, struct, headers}
+          | :ok
+          | {:error, map, status_code}
+          | {:error, map}
+          | any
 
   @doc """
   Parses the response from darksky API calls
@@ -14,11 +20,16 @@ defmodule Darkskyx.Parser do
   def parse({:ok, %HTTPoison.Response{body: body, headers: headers, status_code: status}})
       when status in [200, 201],
       do: {:ok, parse_success_response(body), parse_headers(headers)}
+
   def parse({:ok, %HTTPoison.Response{body: _body, status_code: 204}}), do: :ok
   def parse({:error, %HTTPoison.Error{id: _, reason: reason}}), do: {:error, %{reason: reason}}
-  def parse({:ok, %HTTPoison.Response{body: body, status_code: 403}}), do: {:error, parse_success_response(body), 403}
+
+  def parse({:ok, %HTTPoison.Response{body: body, status_code: 403}}),
+    do: {:error, parse_success_response(body), 403}
+
   def parse({:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}}),
     do: {:error, parse_success_response(body), status}
+
   def parse(response), do: response
 
   defp parse_success_response(body), do: Poison.decode!(body)

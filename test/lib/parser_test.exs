@@ -11,6 +11,7 @@ defmodule Darkskyx.ParserTest do
         assert is_map(headers)
       end
     end
+
     test "parse response with 400" do
       use_cassette "invalid_400" do
         {:error, body, status} = Api.forecast(39.749476, 1234)
@@ -18,6 +19,7 @@ defmodule Darkskyx.ParserTest do
         assert status == 400
       end
     end
+
     test "parse response with 403" do
       use_cassette "invalid_403" do
         {:error, body, status} = Api.forecast(39.749476, -104.991428)

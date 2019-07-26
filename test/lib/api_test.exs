@@ -56,7 +56,8 @@ defmodule Darkskyx.ApiTest do
 
     test "with single exlude", %{forecast_keys: forecast_keys} do
       use_cassette "valid_forecast_without_daily" do
-        {:ok, forecast, _headers} = Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily"})
+        {:ok, forecast, _headers} =
+          Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily"})
 
         forecast_keys
         |> Enum.each(fn key ->
