@@ -4,48 +4,23 @@ defmodule Darkskyx.Parser do
   """
 
   @type status_code :: integer
-  @type response ::
-          {:ok, [struct]} | {:ok, struct} | :ok | {:error, map, status_code} | {:error, map} | any
+  @type headers :: map
+  @type response :: {:ok, [struct], headers} | {:ok, struct, headers} | :ok | {:error, map, status_code} | {:error, map} | any
 
   @doc """
   Parses the response from darksky API calls
   """
-  @spec parse(tuple, boolean) :: response
-  def parse(response, with_headers) do
-    case response do
-      {:ok, %HTTPoison.Response{body: body, headers: headers, status_code: status}}
-      when status in [200, 201] ->
-        if with_headers do
-          {:ok, parse_success_response(body), parse_headers(headers)}
-        else
-          {:ok, parse_success_response(body)}
-        end
+  @spec parse(tuple) :: response
+  def parse({:ok, %HTTPoison.Response{body: body, headers: headers, status_code: status}})
+      when status in [200, 201],
+      do: {:ok, parse_success_response(body), parse_headers(headers)}
+  def parse({:ok, %HTTPoison.Response{body: _body, status_code: 204}}), do: :ok
+  def parse({:error, %HTTPoison.Error{id: _, reason: reason}}), do: {:error, %{reason: reason}}
+  def parse({:ok, %HTTPoison.Response{body: body, status_code: 403}}), do: {:error, parse_success_response(body), 403}
+  def parse({:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}}),
+    do: {:error, parse_success_response(body), status}
+  def parse(response), do: response
 
-      {:ok, %HTTPoison.Response{body: _, headers: _, status_code: 204}} ->
-        :ok
-
-      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: 403}} ->
-        {:error, body, 403}
-
-      {:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}} ->
-        {:ok, json} = Poison.decode(body)
-        {:error, json, status}
-
-      {:error, %HTTPoison.Error{id: _, reason: reason}} ->
-        {:error, %{reason: reason}}
-
-      _ ->
-        response
-    end
-  end
-
-  defp parse_success_response(body) do
-    body
-    |> Poison.decode!()
-  end
-
-  defp parse_headers(headers) do
-    headers
-    |> Map.new
-  end
+  defp parse_success_response(body), do: Poison.decode!(body)
+  defp parse_headers(headers), do: Map.new(headers)
 end

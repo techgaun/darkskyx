@@ -45,7 +45,7 @@ defmodule Darkskyx.ApiTest do
   describe "forecast/3" do
     test "no options", %{forecast_keys: forecast_keys} do
       use_cassette "valid_forecast" do
-        {:ok, forecast} = Api.forecast(39.749476, -104.991428)
+        {:ok, forecast, _headers} = Api.forecast(39.749476, -104.991428)
 
         forecast_keys
         |> Enum.each(fn key ->
@@ -56,7 +56,7 @@ defmodule Darkskyx.ApiTest do
 
     test "with single exlude", %{forecast_keys: forecast_keys} do
       use_cassette "valid_forecast_without_daily" do
-        {:ok, forecast} = Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily"})
+        {:ok, forecast, _headers} = Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily"})
 
         forecast_keys
         |> Enum.each(fn key ->
@@ -70,7 +70,7 @@ defmodule Darkskyx.ApiTest do
 
     test "with multiple exludes", %{forecast_keys: forecast_keys} do
       use_cassette "valid_forecast_without_daily_and_hourly" do
-        {:ok, forecast} =
+        {:ok, forecast, _headers} =
           Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily, hourly"})
 
         forecast_keys
@@ -83,12 +83,22 @@ defmodule Darkskyx.ApiTest do
         end)
       end
     end
+
+    test "returns headers" do
+      use_cassette "valid_forecast_without_daily_and_hourly" do
+        {:ok, _forecast, headers} =
+          Api.forecast(39.749476, -104.991428, %Darkskyx{exclude: "daily, hourly"})
+
+        assert "max-age=60" == headers["Cache-Control"]
+        assert "3" == headers["X-Forecast-API-Calls"]
+      end
+    end
   end
 
   describe "time_machine/3" do
     test "no options", %{time_machine_keys: time_machine_keys} do
       use_cassette "valid_time_machine" do
-        {:ok, time_machine} = Api.time_machine(39.749476, -104.991428, @time)
+        {:ok, time_machine, _headers} = Api.time_machine(39.749476, -104.991428, @time)
 
         time_machine_keys
         |> Enum.each(fn key ->
@@ -99,7 +109,7 @@ defmodule Darkskyx.ApiTest do
 
     test "with single exlude", %{time_machine_keys: time_machine_keys} do
       use_cassette "valid_time_machine_without_daily" do
-        {:ok, time_machine} =
+        {:ok, time_machine, _headers} =
           Api.time_machine(39.749476, -104.991428, @time, %Darkskyx{exclude: "daily"})
 
         time_machine_keys
@@ -114,7 +124,7 @@ defmodule Darkskyx.ApiTest do
 
     test "with multiple exludes", %{time_machine_keys: time_machine_keys} do
       use_cassette "valid_time_machine_without_daily_and_hourly" do
-        {:ok, time_machine} =
+        {:ok, time_machine, _headers} =
           Api.time_machine(39.749476, -104.991428, @time, %Darkskyx{exclude: "daily, hourly"})
 
         time_machine_keys
@@ -127,36 +137,14 @@ defmodule Darkskyx.ApiTest do
         end)
       end
     end
-  end
 
-  describe "forecast_with_headers/3" do
-    test "no options", %{forecast_keys: forecast_keys} do
-      use_cassette "valid_forecast" do
-        {:ok, forecast, headers} = Api.forecast_with_headers(39.749476, -104.991428)
-
-        forecast_keys
-        |> Enum.each(fn key ->
-          assert Enum.member?(Map.keys(forecast), key)
-        end)
-
-        assert "max-age=60" == headers["Cache-Control"]
-        assert "1" == headers["X-Forecast-API-Calls"]
-      end
-    end
-  end
-
-  describe "time_machine_with_headers/3" do
-    test "no options", %{time_machine_keys: time_machine_keys} do
-      use_cassette "valid_time_machine" do
-        {:ok, time_machine, headers} = Api.time_machine_with_headers(39.749476, -104.991428, @time)
-
-        time_machine_keys
-        |> Enum.each(fn key ->
-          assert Enum.member?(Map.keys(time_machine), key)
-        end)
+    test "returns headers" do
+      use_cassette "valid_time_machine_without_daily_and_hourly" do
+        {:ok, _time_machine, headers} =
+          Api.time_machine(39.749476, -104.991428, @time, %Darkskyx{exclude: "daily, hourly"})
 
         assert "max-age=3600" == headers["Cache-Control"]
-        assert "5" == headers["X-Forecast-API-Calls"]
+        assert "6" == headers["X-Forecast-API-Calls"]
       end
     end
   end
