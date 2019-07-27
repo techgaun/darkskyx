@@ -30,6 +30,6 @@ defmodule Darkskyx do
   def current(lat, lng), do: lat |> forecast(lng) |> _format_current
   def current(lat, lng, params), do: lat |> forecast(lng, params) |> _format_current
 
-  defp _format_current({:ok, %{"currently" => current}}), do: current
+  defp _format_current({:ok, %{"currently" => current}}), do: {:ok, current}
   defp _format_current(error), do: error
 end

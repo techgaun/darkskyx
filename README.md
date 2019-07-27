@@ -67,11 +67,6 @@ Darkskyx.current(37, -94, %Darkskyx{lang: "ar"})
 This package only performs API call and asks consumer of this package
 to perform things such as handling rate-limiting.
 
-## To Do
-
-- ~~Consider adding shortcuts such as current instead of having to parse response on users side~~
-- Consider adding rate-limit and show current day API usage
-
 ## Author
 
 - [Samar Acharya](https://github.com/techgaun)
