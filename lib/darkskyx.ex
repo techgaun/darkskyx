@@ -20,12 +20,16 @@ defmodule Darkskyx do
   """
 
   defstruct extend: nil, exclude: nil, lang: "en", units: "auto"
+
   defdelegate forecast(lat, lng), to: Darkskyx.Api
   defdelegate forecast(lat, lng, params), to: Darkskyx.Api
+
   defdelegate time_machine(lat, lng, time), to: Darkskyx.Api
   defdelegate time_machine(lat, lng, time, params), to: Darkskyx.Api
+
   def current(lat, lng), do: lat |> forecast(lng) |> _format_current
   def current(lat, lng, params), do: lat |> forecast(lng, params) |> _format_current
+
   defp _format_current({:ok, %{"currently" => current}}), do: current
-  defp _format_current(_), do: {:error, %{reason: "could not retrieve current weather"}}
+  defp _format_current(error), do: error
 end

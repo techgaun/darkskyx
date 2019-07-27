@@ -2,8 +2,6 @@ defmodule Darkskyx.Api do
   @moduledoc """
   Simple API wrapper for Darksky weather API
   """
-  use HTTPoison.Base
-  alias __MODULE__
   alias Darkskyx.Parser
   import Darkskyx.Utils
 
@@ -38,7 +36,7 @@ defmodule Darkskyx.Api do
   def read(path_arg, query_params \\ %{}) do
     path_arg
     |> build_url(query_params)
-    |> Api.get(request_headers())
+    |> HTTPoison.get(request_headers())
     |> Parser.parse()
   end
 
