@@ -4,7 +4,7 @@ defmodule Darkskyx.Mixfile do
   def project do
     [
       app: :darkskyx,
-      version: "1.0.0-dev",
+      version: "1.0.0",
       elixir: "~> 1.5",
       description: "A Darksky.net weather api client for Elixir",
       source_url: "https://github.com/techgaun/darkskyx",
