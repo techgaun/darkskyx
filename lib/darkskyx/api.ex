@@ -38,9 +38,9 @@ defmodule Darkskyx.Api do
     "#{@base_url}/#{api_key()}/#{path_arg}?#{URI.encode_query(query_params)}"
   end
 
-  defp process_params(nil), do: defaults()
-
-  defp process_params(params) do
+  @doc false
+  def process_params(nil), do: defaults()
+  def process_params(params) do
     defaults()
     |> Map.merge(params)
     |> Map.delete(:__struct__)
