@@ -40,6 +40,7 @@ defmodule Darkskyx.Api do
 
   @doc false
   def process_params(nil), do: defaults()
+
   def process_params(params) do
     defaults()
     |> Map.merge(params)
