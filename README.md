@@ -6,13 +6,13 @@
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+The package can be installed as:
 
 Add `darkskyx` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:darkskyx, "~> 0.1.6"}]
+  [{:darkskyx, "~> 1.0"}]
 end
 ```
 
@@ -66,6 +66,13 @@ Darkskyx.current(37, -94, %Darkskyx{lang: "ar"})
 
 This package only performs API call and asks consumer of this package
 to perform things such as handling rate-limiting.
+
+### Change on v1.0
+
+All the raw api calls except `Darkskyx.current` and `Darkskyx.forecast`
+now return headers for success calls like: `{:ok, body, headers}`
+This gives flexibility for API consumer to handle things such as
+rate limiting based on the headers.
 
 ## Author
 
