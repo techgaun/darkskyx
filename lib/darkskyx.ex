@@ -39,6 +39,6 @@ defmodule Darkskyx do
     |> _format_current()
   end
 
-  defp _format_current({:ok, %{"currently" => current}}), do: {:ok, current}
+  defp _format_current({:ok, %{"currently" => current}, _headers}), do: {:ok, current}
   defp _format_current(error), do: error
 end

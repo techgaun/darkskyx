@@ -19,19 +19,19 @@ defmodule Darkskyx.Parser do
   @spec parse(tuple) :: response
   def parse({:ok, %HTTPoison.Response{body: body, headers: headers, status_code: status}})
       when status in [200, 201],
-      do: {:ok, parse_success_response(body), parse_headers(headers)}
+      do: {:ok, parse_response_body(body), parse_headers(headers)}
 
   def parse({:ok, %HTTPoison.Response{body: _body, status_code: 204}}), do: :ok
   def parse({:error, %HTTPoison.Error{id: _, reason: reason}}), do: {:error, %{reason: reason}}
 
   def parse({:ok, %HTTPoison.Response{body: body, status_code: 403}}),
-    do: {:error, parse_success_response(body), 403}
+    do: {:error, parse_response_body(body), 403}
 
   def parse({:ok, %HTTPoison.Response{body: body, headers: _, status_code: status}}),
-    do: {:error, parse_success_response(body), status}
+    do: {:error, parse_response_body(body), status}
 
   def parse(response), do: response
 
-  defp parse_success_response(body), do: Poison.decode!(body)
+  defp parse_response_body(body), do: Poison.decode!(body)
   defp parse_headers(headers), do: Map.new(headers)
 end
