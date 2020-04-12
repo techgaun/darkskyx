@@ -4,7 +4,7 @@
 
 > A Darksky.net weather api client for Elixir
 
-As of March 31, 2020, Darksky has been [acquired by Apple](https://blog.darksky.net/) and the API will continue to function until 2021.
+As of March 31, 2020, Darksky has been [acquired by Apple](https://blog.darksky.net/) and the API will continue to function through the end of 2021.
 
 ## Installation
 
